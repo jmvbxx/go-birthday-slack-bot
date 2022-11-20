@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"os"
 
@@ -16,6 +17,16 @@ func main() {
 		Examples:    []string{"ping"},
 		Handler: func(botCtx slacker.BotContext, request slacker.Request, response slacker.ResponseWriter) {
 			response.Reply("pong")
+		},
+	})
+
+	bot.Command("hbd {person}", &slacker.CommandDefinition{
+		Description: "Wish someone a happy birthday!",
+		Examples:    []string{"Happy birthday, Dad"},
+		Handler: func(botCtx slacker.BotContext, request slacker.Request, response slacker.ResponseWriter) {
+			person := request.Param("person")
+			r := fmt.Sprintf("Happy birthday, %s", person)
+			response.Reply(r)
 		},
 	})
 
